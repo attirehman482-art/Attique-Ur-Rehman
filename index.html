@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortfolioPro - UET ATD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Segoe+UI:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">My Portfolio</div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                    <li><a href="#academics"><i class="fas fa-graduation-cap"></i> <span>Academics</span></a></li>
+                    <li><a href="#cv"><i class="fas fa-file-alt"></i> <span>CV</span></a></li>
+                    <li><a href="#projects"><i class="fas fa-code"></i> <span>Projects</span></a></li>
+                    <li><a href="#gallery"><i class="fas fa-images"></i> <span>Gallery</span></a></li>
+                    <li><a href="#contact"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <button class="nav-btn" id="themeToggle">
+                        <i class="fas fa-palette"></i> <span>Theme</span>
+                    </button>
+                    <button class="nav-btn" id="adminBtn">
+                        <i class="fas fa-cog"></i> <span>Admin</span>
+                    </button>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="profile-container">
+                <img src="photo.png" alt="Profile" class="profile-img" id="profileImg">
+            </div>
+            <div class="hero-text">
+                <h1 id="userName">ATTIQUE UR REHMAN</h1>
+                <p class="subtitle" id="userTitle">Computer Science Student</p>
+                <p class="reg-number" id="regNumber">UET-ATD-CS-10-001-2025-01920</p>
+                <div class="bio">
+                    <p id="userBio">Passionate Computer Science student at UET Abbottabad with expertise in digital literacy, digital marketing, and web development. Dedicated to leveraging technology for innovative solutions and continuous learning in the ever-evolving tech landscape.</p>
+                </div>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Contact Me
+                    </a>
+                    <a href="Attique CV.pdf" class="btn btn-secondary" download>
+                        <i class="fas fa-download"></i> Download CV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</section>
+
+    <!-- Academics Section -->
+    <section id="academics">
+        <div class="container">
+            <h2 class="section-title">Academic Records</h2>
+            <div class="card">
+                <div class="table-controls" style="margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <input type="text" id="searchTable" placeholder="🔍 Search records..." class="form-control" style="flex: 1; min-width: 200px;">
+                    <select id="filterLevel" class="form-control" style="min-width: 180px;">
+                        <option value="">All Levels</option>
+                        <option value="Primary">Primary</option>
+                        <option value="Elementary">Elementary</option>
+                        <option value="Middle">Middle</option>
+                        <option value="Matric">Matriculation</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Undergraduate">Undergraduate</option>
+                        <option value="Graduate">Graduate</option>
+                    </select>
+                </div>
+                <div class="table-wrapper">
+                    <table id="academicTable">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable(0)">Level</th>
+                                <th onclick="sortTable(1)">Institution</th>
+                                <th onclick="sortTable(2)">Year</th>
+                                <th onclick="sortTable(3)">Grade</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="academicTableBody">
+                            <!-- Data loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CV Section -->
+    <section id="cv" style="background: var(--bg-secondary);">
+        <div class="container">
+            <h2 class="section-title">Curriculum Vitae</h2>
+            <div class="card">
+                <div class="alert alert-success" id="cvSuccess" style="display: none;">
+                    <i class="fas fa-check-circle"></i> CV processed successfully!
+                </div>
+                
+                <div id="cvPreview" class="cv-preview-container">
+                    <i class="fas fa-file-pdf" style="font-size: 4rem; color: var(--neon-blue); margin-bottom: 1rem;"></i>
+                    <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;">Your Professional CV</h3>
+                    <p style="color: var(--text-secondary);">Upload a PDF or generate from your profile</p>
+                    <p id="cvStatus" style="color: var(--matrix-green); margin-top: 1rem; display: none;">
+                        <i class="fas fa-check-circle"></i> CV Ready for Download
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1rem; color: var(--text-primary);">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload CV (PDF only)
+                    </h3>
+                    <input type="file" id="cvUpload" accept=".pdf" class="form-control" onchange="handleCVUpload(event)">
+                    <div id="uploadStatus" style="margin-top: 0.5rem;"></div>
+                </div>
+
+                <div class="cv-actions-grid">
+                    <button class="btn btn-primary" onclick="toggleCVViewer()" id="viewCVBtn" disabled>
+                        <i class="fas fa-eye"></i> View CV
+                    </button>
+                    <button class="btn btn-primary" onclick="generateCV()" id="generateBtn">
+                        <i class="fas fa-magic"></i> Generate CV
+                    </button>
+                    <button class="btn btn-secondary" onclick="downloadCV('pdf')" id="downloadPDFBtn" disabled>
+                        <i class="fas fa-file-pdf"></i> Print to PDF
+                    </button>
+                    <button class="btn btn-warning" onclick="downloadCV('word')" id="downloadWordBtn" disabled>
+                        <i class="fas fa-file-word"></i> Download Word
+                    </button>
+                </div>
+
+                <!-- CV Viewer Container -->
+                <div class="cv-viewer-container" id="cvViewerContainer">
+                    <iframe id="cvViewer" class="cv-viewer" src=""></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Projects Portfolio</h2>
+            <div id="progressContainer">
+                <!-- Projects loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" style="background: var(--bg-secondary);">
+        <div class="container">
+            <h2 class="section-title">Project Gallery</h2>
+            <div id="galleryContainer" class="gallery">
+                <!-- Gallery items loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Me</h2>
+            <div class="card" style="max-width: 600px; margin: 0 auto;">
+                <form id="contactForm">
+                    <div id="successAlert" class="alert alert-success" style="display: none;">
+                        <i class="fas fa-check-circle"></i> Message sent successfully!
+                    </div>
+                    <div id="errorAlert" class="alert alert-error" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i> Please check the form errors.
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="name"><i class="fas fa-user"></i> Full Name *</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Email Address *</label>
+                        <input type="email" id="email" name="email" class="form-control" required 
+                               onblur="validateEmailExistence(this.value)">
+                        <div id="emailValidation" class="email-validation" style="display: none;">
+                            <i class="fas fa-circle"></i> <span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject"><i class="fas fa-tag"></i> Subject</label>
+                        <input type="text" id="subject" name="subject" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message"><i class="fas fa-comment"></i> Message *</label>
+                        <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+                    </div>
+                    
+                    <div class="loader" id="formLoader"></div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3 style="margin-bottom: 1rem; color: var(--text-primary);">My Portfolio</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">
+                        A cutting-edge portfolio platform for UET Abbottabad students to showcase Web Development and Portfolio projects.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://github.com" class="social-link" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com" class="social-link" target="_blank">
+                            <i class="fab fa-linkedin-in"></i>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Quick Links</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.8rem;">
+                            <a href="#home" style="color: var(--text-secondary); text-decoration: none; transition: color 0.3s;">
+                                <i class="fas fa-chevron-right" style="margin-right: 0.5rem; color: var(--neon-blue);"></i> Home
+                            </a>
+                        </li>
+                        <li style="margin-bottom: 0.8rem;">
+                            <a href="#academics" style="color: var(--text-secondary); text-decoration: none; transition: color 0.3s;">
+                                <i class="fas fa-chevron-right" style="margin-right: 0.5rem; color: var(--neon-blue);"></i> Academics
+                            </a>
+                        </li>
+                        <li style="margin-bottom: 0.8rem;">
+                            <a href="#projects" style="color: var(--text-secondary); text-decoration: none; transition: color 0.3s;">
+                                <i class="fas fa-chevron-right" style="margin-right: 0.5rem; color: var(--neon-blue);"></i> Projects
+                            </a>
+                        </li>
+                        <li style="margin-bottom: 0.8rem;">
+                            <a href="#contact" style="color: var(--text-secondary); text-decoration: none; transition: color 0.3s;">
+                                <i class="fas fa-chevron-right" style="margin-right: 0.5rem; color: var(--neon-blue);"></i> Contact
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Contact Info</h3>
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem;">
+                            <i class="fas fa-map-marker-alt" style="color: var(--neon-blue); margin-top: 0.2rem;"></i>
+                            <div>
+                                <p style="color: var(--text-primary); font-weight: 600;">Location</p>
+                                <p style="color: var(--text-secondary);">UET Abbottabad, Pakistan</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem;">
+                            <i class="fas fa-envelope" style="color: var(--neon-blue); margin-top: 0.2rem;"></i>
+                            <div>
+                                <p style="color: var(--text-primary); font-weight: 600;">Email</p>
+                                <p style="color: var(--text-secondary);">attirehman482@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; padding-top: 2rem; border-top: 1px solid rgba(0, 243, 255, 0.1);">
+                <p style="color: var(--text-secondary);">
+                    &copy; 2026 My Portfolio - UET Abbottabad. All rights reserved.
+                </p>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.9rem;">
+                    Designed with <i class="fas fa-heart" style="color: var(--cyber-pink);"></i> for Computer Science students
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="color: var(--text-primary);">
+                    <i class="fas fa-cog" style="color: var(--neon-blue);"></i> Admin Panel
+                </h2>
+                <button class="btn btn-danger" onclick="closeAdminModal()" style="padding: 0.5rem 1rem; border-radius: 10px;">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="switchTab('profile')">
+                    <i class="fas fa-user"></i> Profile
+                </button>
+                <button class="admin-tab" onclick="switchTab('academics')">
+                    <i class="fas fa-graduation-cap"></i> Academics
+                </button>
+                <button class="admin-tab" onclick="switchTab('projects')">
+                    <i class="fas fa-code"></i> Projects
+                </button>
+                <button class="admin-tab" onclick="switchTab('gallery')">
+                    <i class="fas fa-images"></i> Gallery
+                </button>
+                <button class="admin-tab" onclick="switchTab('email')">
+                    <i class="fas fa-envelope"></i> Email Settings
+                </button>
+            </div>
+            <button class="admin-tab" onclick="switchTab('backup')">
+                <i class="fas fa-download"></i> Backup/Restore
+            </button>
+            <button class="admin-tab" onclick="resetToDefaultData()" style="background: var(--cyber-pink); color: white;">
+                <i class="fas fa-redo"></i> Reset to Default Data
+            </button>
+
+            <!-- Profile Tab -->
+            <div id="profileTab" class="tab-content active" style="display: block;">
+                <form id="profileForm" style="margin-top: 2rem;">
+                    <div class="alert alert-success" id="profileSuccess" style="display: none;">
+                        <i class="fas fa-check-circle"></i> Profile updated successfully!
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Profile Picture</label>
+                        <div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center;">
+                            <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 4px solid var(--border);">
+                                <img src="" id="profilePreview" alt="Preview" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <div style="flex: 1; min-width: 200px;">
+                                <input type="file" id="profileUpload" accept="image/*" class="form-control" onchange="previewProfileImage(event)">
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
+                                    Recommended: Square image, 500x500 pixels
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nameInput">Full Name</label>
+                            <input type="text" id="nameInput" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="titleInput">Professional Title</label>
+                            <input type="text" id="titleInput" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="regInput">Registration Number</label>
+                            <input type="text" id="regInput" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phoneInput">Phone Number</label>
+                            <input type="tel" id="phoneInput" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bioInput">Bio</label>
+                        <textarea id="bioInput" class="form-control" rows="4"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-save"></i> Save Profile
+                    </button>
+                </form>
+            </div>
+
+            <!-- Academics Tab -->
+            <div id="academicsTab" class="tab-content">
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1.5rem;">
+                        <i class="fas fa-graduation-cap"></i> Academic Records Management
+                    </h3>
+                    
+                    <div class="alert alert-success" id="academicSuccess" style="display: none;">
+                        <i class="fas fa-check-circle"></i> Academic record saved successfully!
+                    </div>
+                    
+                    <form id="academicForm" style="margin-top: 2rem;">
+                        <input type="hidden" id="academicId" value="">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="levelInput">Education Level</label>
+                                <select id="levelInput" class="form-control" required>
+                                    <option value="">Select Level</option>
+                                    <option value="Primary">Primary</option>
+                                    <option value="Elementary">Elementary</option>
+                                    <option value="Middle">Middle</option>
+                                    <option value="Matric">Matriculation</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Undergraduate">Undergraduate</option>
+                                    <option value="Graduate">Graduate</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="institutionInput">Institution Name</label>
+                                <input type="text" id="institutionInput" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="yearInput">Duration</label>
+                                <input type="text" id="yearInput" class="form-control" placeholder="e.g., 2019-2023" required>
+                            </div>
+                            
+                        <div class="form-group">
+                                <label for="gradeInput">Grade/Percentage/CGPA (Optional)</label>
+                                <input type="text" id="gradeInput" class="form-control" placeholder="e.g., 3.8/4.0 or 92% (Optional)">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="academicSubmitBtn">
+                            <i class="fas fa-plus"></i> Add Academic Record
+                        </button>
+                        <button type="button" class="btn btn-warning" onclick="resetAcademicForm()" style="display: none;" id="academicCancelBtn">
+                            <i class="fas fa-times"></i> Cancel Edit
+                        </button>
+                    </form>
+                    
+                    <div style="margin-top: 3rem;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 1.5rem;">Existing Records</h4>
+                        <div id="academicRecordsList">
+                            <!-- Records loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Tab -->
+            <div id="projectsTab" class="tab-content">
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1.5rem;">
+                        <i class="fas fa-code"></i> Projects Management
+                    </h3>
+                    
+                    <div class="alert alert-success" id="projectSuccess" style="display: none;">
+                        <i class="fas fa-check-circle"></i> Project saved successfully!
+                    </div>
+                    
+                    <form id="projectForm" style="margin-top: 2rem;">
+                        <input type="hidden" id="projectId" value="">
+                        
+                        <div class="form-group">
+                            <label for="projectNameInput">Project Name</label>
+                            <input type="text" id="projectNameInput" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectDescInput">Description</label>
+                            <textarea id="projectDescInput" class="form-control" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectProgressInput">Progress (%)</label>
+                            <input type="range" id="projectProgressInput" min="0" max="100" value="0" class="form-control" 
+                                   oninput="document.getElementById('progressValue').textContent = this.value + '%'">
+                            <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                                <span>0%</span>
+                                <span id="progressValue">0%</span>
+                                <span>100%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectTechInput">Technologies (comma separated)</label>
+                            <input type="text" id="projectTechInput" class="form-control" placeholder="e.g., React, Node.js, MongoDB">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" id="projectSubmitBtn">
+                            <i class="fas fa-plus"></i> Add Project
+                        </button>
+                        <button type="button" class="btn btn-warning" onclick="resetProjectForm()" style="display: none;" id="projectCancelBtn">
+                            <i class="fas fa-times"></i> Cancel Edit
+                        </button>
+                    </form>
+                    
+                    <div style="margin-top: 3rem;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 1.5rem;">Existing Projects</h4>
+                        <div id="projectRecordsList">
+                            <!-- Projects loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Tab -->
+            <div id="galleryTab" class="tab-content">
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1.5rem;">
+                        <i class="fas fa-images"></i> Gallery Management
+                    </h3>
+                    
+                    <div class="alert alert-success" id="gallerySuccess" style="display: none;">
+                        <i class="fas fa-check-circle"></i> Gallery item saved successfully!
+                    </div>
+                    
+                    <form id="galleryForm" style="margin-top: 2rem;">
+                        <input type="hidden" id="galleryId" value="">
+                        
+                        <div class="form-group">
+                            <label>Upload Image</label>
+                            <div style="border: 2px dashed var(--border); padding: 2rem; text-align: center; border-radius: 10px; cursor: pointer;"
+                                 onclick="document.getElementById('galleryUpload').click()">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+                                <p style="color: var(--text-primary);">Click to upload image</p>
+                                <input type="file" id="galleryUpload" accept="image/*" style="display: none;" onchange="previewGalleryImage(event)">
+                            </div>
+                            <img id="galleryPreview" style="max-width: 100%; margin-top: 1rem; border-radius: 10px; display: none;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="galleryTitleInput">Image Title</label>
+                            <input type="text" id="galleryTitleInput" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="galleryDescInput">Description</label>
+                            <textarea id="galleryDescInput" class="form-control" rows="3"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" id="gallerySubmitBtn">
+                            <i class="fas fa-plus"></i> Add to Gallery
+                        </button>
+                        <button type="button" class="btn btn-warning" onclick="resetGalleryForm()" style="display: none;" id="galleryCancelBtn">
+                            <i class="fas fa-times"></i> Cancel Edit
+                        </button>
+                    </form>
+                    
+                    <div style="margin-top: 3rem;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 1.5rem;">Gallery Images</h4>
+                        <div id="galleryRecordsList">
+                            <!-- Gallery items loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Settings Tab -->
+            <div id="emailTab" class="tab-content">
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1.5rem;">
+                        <i class="fas fa-envelope"></i> Email Configuration
+                    </h3>
+                    
+                    <div class="alert alert-success" id="emailSuccess" style="display: none;">
+                        <i class="fas fa-check-circle"></i> Email settings saved successfully!
+                    </div>
+                    
+                    <form id="emailConfigForm" style="margin-top: 2rem;">
+                        <div class="form-group">
+                            <label for="validDomains">Valid Email Domains (comma separated)</label>
+                            <textarea id="validDomains" class="form-control" rows="4" placeholder="gmail.com, yahoo.com, outlook.com, uet.edu.pk, hotmail.com"></textarea>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
+                                Emails from these domains will be accepted for contact form
+                            </p>
+                        </div>
+                        <!-- Backup/Restore Tab -->
+<div id="backupTab" class="tab-content">
+    <div style="margin-top: 2rem;">
+        <h3 style="color: var(--text-primary); margin-bottom: 1.5rem;">
+            <i class="fas fa-database"></i> Backup & Restore Data
+        </h3>
+        
+        <div class="alert alert-success" id="backupSuccess" style="display: none;">
+            <i class="fas fa-check-circle"></i> Operation completed successfully!
+        </div>
+        
+        <div class="card" style="margin-bottom: 2rem;">
+            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Export Your Data</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                Download all your portfolio data to use in another browser or as backup
+            </p>
+            <button class="btn btn-primary" onclick="exportData()" style="width: 100%;">
+                <i class="fas fa-download"></i> Download Backup File
+            </button>
+        </div>
+        
+        <div class="card">
+            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Import Your Data</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                Upload a previously exported backup file to restore your data
+            </p>
+            <input type="file" id="importFile" accept=".json" class="form-control" style="margin-bottom: 1rem;">
+            <button class="btn btn-success" onclick="importData()" style="width: 100%;">
+                <i class="fas fa-upload"></i> Restore from Backup
+            </button>
+        </div>
+    </div>
+</div>
+                        <div class="form-group">
+                            <label for="emailNotification">Send Email Notifications</label>
+                            <select id="emailNotification" class="form-control">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="autoReply">Auto-reply Message</label>
+                            <textarea id="autoReply" class="form-control" rows="4" placeholder="Thank you for your message. I will get back to you soon."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-save"></i> Save Email Settings
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
